@@ -1,28 +1,25 @@
 defmodule Cryptopals do
-  use Bitwise;
 
-  defp from_hex(hex) do
-    Base.decode16! hex, case: :lower
+  def challenge1 do
+    Hex.to_base64 "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d"
   end
 
-  defp to_hex(bytes) do
-    Base.encode16 bytes, case: :lower
+  def challenge2 do
+    a = "1c0111001f010100061a024b53535009181c"
+    b = "686974207468652062756c6c277320657965"
+    Hex.xor(a, b)
   end
 
-  def hex_to_base64(hex) do
-    from_hex(hex) |> Base.encode64
-  end
-
-  defp byte_xor(b1, b2) do
-    [b1, b2]
-    |> Enum.map(&:binary.bin_to_list/1)
-    |> List.zip
-    |> Enum.map(fn {a,b} -> a ^^^ b end)
-    |> :binary.list_to_bin
-  end
-
-  def hex_xor(h1, h2) do
-    byte_xor(from_hex(h1), from_hex(h2)) |> to_hex
+  def challenge3 do
+    ct  = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
+    pts = 0..255 |> Enum.map fn n ->
+      <<n>>              
+      |> Bytes.to_hex
+      |> String.duplicate(div String.length(ct), 2)
+      |> Hex.xor(ct)
+      |> Bytes.from_hex
+    end
+    pts |> Enum.max_by &English.score(&1)
   end
 
 end
