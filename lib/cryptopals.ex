@@ -31,4 +31,12 @@ defmodule Cryptopals do
     pts |> Enum.max_by &English.score(&1)
   end
 
+  def challenge5 do
+    pt = """
+    Burning 'em, if you ain't quick and nimble
+    I go crazy when I hear a cymbal
+    """ |> String.rstrip
+    Bytes.xor_cycled(pt, "ICE") |> Bytes.to_hex
+  end
+
 end

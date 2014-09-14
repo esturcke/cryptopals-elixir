@@ -17,4 +17,10 @@ defmodule Bytes do
     |> :binary.list_to_bin
   end
 
+  def xor_cycled(x, y) do
+    times = div((byte_size(x) - 1), byte_size(y)) + 1
+    y = y |> String.duplicate(times) |> String.slice 0..(byte_size(x)-1)
+    xor(x, y)
+  end
+
 end
