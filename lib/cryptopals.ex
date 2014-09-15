@@ -10,24 +10,16 @@ defmodule Cryptopals do
     Hex.xor(a, b)
   end
 
-  defp single_byte_xor(ct, n) do
-    <<n>>
-    |> Bytes.to_hex
-    |> String.duplicate(div String.length(ct), 2)
-    |> Hex.xor(ct)
-    |> Bytes.from_hex
-  end
-
   def challenge3 do
     ct  = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
     0..255
-    |> Enum.map(fn n -> single_byte_xor(ct, n) end)
+    |> Enum.map(fn n -> Bytes.xor_cycled(ct |> Bytes.from_hex, <<n>>) end)
     |> Enum.max_by &English.score(&1)
   end
 
   def challenge4 do
     cts = Utils.lines("data/challenge4.txt")
-    pts = for ct <- cts, n <- 0..255, do: single_byte_xor(ct, n)
+    pts = for ct <- cts, n <- 0..255, do: Bytes.xor_cycled(ct |> Bytes.from_hex, <<n>>)
     pts |> Enum.max_by &English.score(&1)
   end
 
