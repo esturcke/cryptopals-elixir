@@ -27,4 +27,9 @@ defmodule CryptopalsTest do
 
   end
 
+  test "Set 1 / Challenge 6 - Break repeating-key XOR" do
+    pt = "data/solution6.txt" |> File.read!
+    assert challenge6 == pt
+  end
+
 end 

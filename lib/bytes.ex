@@ -9,6 +9,10 @@ defmodule Bytes do
     Base.encode16 bytes, case: :lower
   end
 
+  def from_base64(s) do
+    s |> String.replace("\n", "") |> Base.decode64!
+  end
+
   def bytewise_merge(xs, f) do
     xs
     |> Enum.map(&:binary.bin_to_list/1)
@@ -42,6 +46,17 @@ defmodule Bytes do
 
   def edit_distance(x, y) do
     xor(x, y) |> bits_set
+  end
+
+  @doc """
+  Split into blocks 
+  """
+  def transpose(x, n) do
+    for i <- 0..n-1 do
+      l = div(byte_size(x) - i - 1, n)
+      block = for j <- 0..l, do: x |> :binary.at i + j * n
+      block |> :binary.list_to_bin
+    end
   end
 
 end

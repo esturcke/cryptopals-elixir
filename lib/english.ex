@@ -56,14 +56,28 @@ defmodule English do
     )
   end
 
-  def score(string) do
-    if String.valid?(string) do
+  def printable_ascii?(?\t), do: true
+  def printable_ascii?(?\n), do: true
+  def printable_ascii?(c) when is_integer(c), do: 32 <= c and c <= 126
+  def printable_ascii?(s) do
+    s |> :binary.bin_to_list |> Enum.all? &printable_ascii?/1 
+  end
+
+  def clean(s) do
+    s |> :binary.bin_to_list |> Enum.filter(&printable_ascii?/1) |> :binary.list_to_bin
+  end
+
+  def score(string, print \\ false) do
+    score = if printable_ascii? string do
       string
       |> frequency
       |> likeEnglish
     else
       0.0
     end
+    s = clean string
+    if print and byte_size(s) > 0, do: IO.puts("#{s}\n:: #{score}\n\n")
+    score
   end
 
 end
