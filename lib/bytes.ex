@@ -44,6 +44,18 @@ defmodule Bytes do
     |> Enum.sum
   end
 
+  def chunk(x, n) do
+    size = byte_size x
+    for i <- 0..div(size - 1, n) do
+      length = min n, size - i * n
+      :binary.part(x, i * n, length)
+    end
+  end
+
+  def join(xs) do
+    Enum.join xs
+  end
+
   def edit_distance(x, y) do
     xor(x, y) |> bits_set
   end

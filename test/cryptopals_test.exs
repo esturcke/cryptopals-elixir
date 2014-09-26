@@ -32,4 +32,9 @@ defmodule CryptopalsTest do
     assert challenge6 == pt
   end
 
+  test "Set 1 / Challenge 7 - AES in ECB mode" do
+    pt = "data/solution7.txt" |> File.read!
+    assert challenge7 == pt
+  end
+
 end 

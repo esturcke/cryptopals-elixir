@@ -12,4 +12,13 @@ defmodule BytesTest do
     assert transpose("abcde",   5) == ["a", "b", "c", "d", "e"] 
   end
 
+  test "Chunk into blocks" do
+    assert chunk("a"      , 1) == ["a"               ]
+    assert chunk("ab"     , 2) == ["ab"              ]
+    assert chunk("abc"    , 3) == ["abc"             ]
+    assert chunk("abcd"   , 2) == ["ab" , "cd"       ]
+    assert chunk("abcde"  , 2) == ["ab" , "cd", "e"  ]
+    assert chunk("abcdef" , 2) == ["ab" , "cd", "ef" ]
+  end
+
 end 
