@@ -14,4 +14,15 @@ defmodule Crypto do
     pt |> :binary.part { 0, s - :binary.at(pt, s - 1) } 
   end
 
+  defp aes_ecb?("", _), do: false
+  defp aes_ecb?(<<block :: binary-size(16), rest :: binary>>, found) do
+    if found |> Set.member? block do
+      true
+    else
+      aes_ecb? rest, found |> Set.put block
+    end
+  end
+  def aes_ecb?(ct) when rem(byte_size(ct), 16) != 0, do: false
+  def aes_ecb?(ct), do: aes_ecb?(ct, HashSet.new)
+
 end

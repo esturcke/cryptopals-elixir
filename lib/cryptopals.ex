@@ -104,4 +104,22 @@ defmodule Cryptopals do
     Crypto.decrypt_aes_ecb(ct, key)
   end
 
+  @doc """
+  # Detect AES in ECB mode
+
+  [In this file](http://cryptopals.com/static/challenge-data/8.txt) are a bunch of
+  hex-encoded ciphertexts.
+
+  One of them has been encrypted with ECB.
+
+  Detect it.
+
+  Remember that the problem with ECB is that it is stateless and deterministic;
+  the same 16 byte plaintext block will always produce the same 16 byte ciphertext.
+  """
+  def challenge8 do
+    lines = "data/challenge8.txt" |> Utils.lines |> Enum.map &Bytes.from_hex/1
+    lines |> Enum.filter(&Crypto.aes_ecb?/1) |> hd |> Bytes.to_hex
+  end
+
 end
