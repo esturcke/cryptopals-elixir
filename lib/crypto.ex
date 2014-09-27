@@ -25,4 +25,9 @@ defmodule Crypto do
   def aes_ecb?(ct) when rem(byte_size(ct), 16) != 0, do: false
   def aes_ecb?(ct), do: aes_ecb?(ct, HashSet.new)
 
+  def pad_pkcs7(pt, l) do
+    n = l - rem(byte_size(pt), l)
+    pt <> :binary.copy(<<n>>, n) 
+  end
+
 end

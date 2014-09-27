@@ -47,4 +47,10 @@ defmodule CryptopalsTest do
     """ |> String.replace "\n", ""
     assert challenge8 == ct
   end
+
+  test "Set 2 / Challenge 9 - Implement PKCS#7 padding" do
+    padded = "YELLOW SUBMARINE" <> <<4,4,4,4,>>
+    assert challenge9 == padded
+  end
+
 end 
