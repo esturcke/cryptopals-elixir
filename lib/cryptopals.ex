@@ -150,4 +150,13 @@ defmodule Cryptopals do
     "YELLOW SUBMARINE" |> Crypto.pad_pkcs7 20
   end
 
+  def challenge10 do
+    key = "YELLOW SUBMARINE"
+    iv  = :binary.copy <<0>>, 16
+    "data/challenge10.txt"
+    |> File.read!
+    |> Bytes.from_base64
+    |> Crypto.decrypt(:aes_cbc128, key, iv)
+  end
+
 end

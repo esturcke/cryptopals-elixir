@@ -2,6 +2,8 @@ defmodule CryptopalsTest do
   use ExUnit.Case
   import Cryptopals
 
+  def vanilla_ice, do: "data/play-that-funky-music.txt" |> File.read!
+
   test "Set 1 / Challenge 1 - Convert hex to base64" do
     assert challenge1 == "SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t"
   end
@@ -28,13 +30,11 @@ defmodule CryptopalsTest do
   end
 
   test "Set 1 / Challenge 6 - Break repeating-key XOR" do
-    pt = "data/solution6.txt" |> File.read!
-    assert challenge6 == pt
+    assert challenge6 == vanilla_ice
   end
 
   test "Set 1 / Challenge 7 - AES in ECB mode" do
-    pt = "data/solution7.txt" |> File.read!
-    assert challenge7 == pt
+    assert challenge7 == vanilla_ice
   end
 
   test "Set 1 / Challenge 8 - Detect AES in ECB mode" do
@@ -51,6 +51,10 @@ defmodule CryptopalsTest do
   test "Set 2 / Challenge 9 - Implement PKCS#7 padding" do
     padded = "YELLOW SUBMARINE" <> <<4,4,4,4,>>
     assert challenge9 == padded
+  end
+
+  test "Set 2 / Challenge 10 - Implement CBC mode" do
+    assert challenge10 == vanilla_ice
   end
 
 end 
